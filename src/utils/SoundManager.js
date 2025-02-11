@@ -44,8 +44,15 @@ function updateGain(numberOfSounds) {
 }
 
 export async function getSound() {
-	if (!sound) {
-		sound = await loadSound("/swapsound.mp3");
-	}
-	return sound;
+    try {
+        const soundPath = `${import.meta.env.BASE_URL}swapsound.mp3`; // Dynamically resolve base path
+        if (!sound) {
+            sound = await loadSound(soundPath);
+        }
+        return sound;
+    } catch (error) {
+        console.error("Error loading sound:", error);
+        return null;
+    }
 }
+
